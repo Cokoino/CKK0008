@@ -22,7 +22,7 @@
               NeoPixels expecting an 800 KHz (vs 400 KHz) data stream
               with color bytes expressed in green, red, blue order per
               pixel.
-  @return  NeoPixel object. Call the begin() function before use.
+  @return  Adafruit_NeoPixel object. Call the begin() function before use.
 */
 NeoPixel::NeoPixel(uint16_t n, uint16_t p, neoPixelType t) :
   begun(false), brightness(0), pixels(NULL), endTime(0) {
@@ -35,7 +35,7 @@ NeoPixel::NeoPixel(uint16_t n, uint16_t p, neoPixelType t) :
   @brief   "Empty" NeoPixel constructor when length, pin and/or pixel type
            are not known at compile-time, and must be initialized later with
            updateType(), updateLength() and setPin().
-  @return  NeoPixel object. Call the begin() function before use.
+  @return  Adafruit_NeoPixel object. Call the begin() function before use.
   @note    This function is deprecated, here only for old projects that
            may still be calling it. New projects should instead use the
            'new' keyword with the first constructor syntax (length, pin,
@@ -50,7 +50,7 @@ NeoPixel::NeoPixel() :
 }
 
 /*!
-  @brief   Deallocate NeoPixel object, set data pin back to INPUT.
+  @brief   Deallocate Adafruit_NeoPixel object, set data pin back to INPUT.
 */
 NeoPixel::~NeoPixel() {
   free(pixels);
@@ -93,13 +93,13 @@ void NeoPixel::updateLength(uint16_t n) {
 
 /*!
   @brief   Change the pixel format of a previously-declared
-           NeoPixel strip object. If format changes from one of
+           Adafruit_NeoPixel strip object. If format changes from one of
            the RGB variants to an RGBW variant (or RGBW to RGB), the old
            data will be deallocated and new data is cleared. Otherwise,
            the old data will remain in RAM and is not reordered to the
            new format, so it's advisable to follow up with clear().
   @param   t  Pixel type -- add together NEO_* constants defined in
-              NeoPixel.h, for example NEO_GRB+NEO_KHZ800 for
+              Adafruit_NeoPixel.h, for example NEO_GRB+NEO_KHZ800 for
               NeoPixels expecting an 800 KHz (vs 400 KHz) data stream
               with color bytes expressed in green, red, blue order per
               pixel.

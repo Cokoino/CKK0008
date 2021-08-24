@@ -14,7 +14,6 @@
 #include <cobit.h>
 
 cobit Car;
-String font = " ";
 
 //use for IRremote
 int RECV_PIN = 3;
@@ -454,6 +453,7 @@ void loop(){
 				break;
 		case Font:
 				Car.FontSize(cmd[1]);
+				String font = " ";
 				font[0] = (char)cmd[2];
 				Car.writing(1, font);
 				mSerialACK();

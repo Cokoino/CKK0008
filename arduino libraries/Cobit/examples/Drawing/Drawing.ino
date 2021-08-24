@@ -56,11 +56,11 @@ void rectangle(int length, int width){    //The length and width parameters are 
   
   Car.Pen_Fall();
   Car.Run_Forward_Distance(length, speed);   
-  Delay_distance(length, speed);
+  Delay_distance(length, speed);         //Time delay based on distance traveled.
   Car.Pen_Rise();
   
   Car.Turn_Right_Degree(90, speed);
-  Delay_degree(90, speed);
+  Delay_degree(90, speed);               //Time delay based on rotation Angle.
 
   Car.Pen_Fall();
   Car.Run_Forward_Distance(width, speed);   

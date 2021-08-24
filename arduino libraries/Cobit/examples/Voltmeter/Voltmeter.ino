@@ -15,9 +15,9 @@ void setup(){
 
 /***************************************************************/
 void loop(){
-  Serial.print(Car.Battery_Voltage());
+  Serial.print(Car.Battery_Voltage());    //Prints the battery voltage to the serial port monitor.
   Serial.print("V     ");
-  Serial.print(Car.Battery_Level());
+  Serial.print(Car.Battery_Level());      //Print the battery voltage percentage to the serial port monitor.
   Serial.println("%");
   delay(1000);
 }

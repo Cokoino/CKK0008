@@ -13,16 +13,16 @@ void setup(){
   Car.Reset_chip();               //Reset N76E003. This function must be used once within the setup function.
   delay(100);
   
-  //use for sonar
-  Car.Sonar_On();
+  //use for sonar      
+  Car.Sonar_On();                 //Turn on the sonar.
   delay(100);
-  //Car.Sonar_Off();               //turn off sonar
+  //Car.Sonar_Off();              //Turn off sonar
 }
 
 /***************************************************************/
 void loop(){
   int distance = 0;
-  distance = Car.Sonar_Measurement_Distance();  //Sonar data refresh rate = 50ms
-  Serial.println(distance);
+  distance = Car.Sonar_Measurement_Distance();  //Read sonar data,sonar data refresh rate = 50ms
+  Serial.println(distance);                     //Print sonar data to serial port monitor.
   delay(1000);
 }
