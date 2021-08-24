@@ -56,59 +56,34 @@ void rectangle(int length, int width){    //The length and width parameters are 
   
   Car.Pen_Fall();
   Car.Run_Forward_Distance(length, speed);   
-  Delay_distance(length, speed);         //Time delay based on distance traveled.
+  Car.Delay_distance(length, speed);         //Time delay based on distance traveled and speed.
   Car.Pen_Rise();
   
   Car.Turn_Right_Degree(90, speed);
-  Delay_degree(90, speed);               //Time delay based on rotation Angle.
+  Car.Delay_degree(90, speed);               //Time delay based on rotation angle and speed.
 
   Car.Pen_Fall();
   Car.Run_Forward_Distance(width, speed);   
-  Delay_distance(width, speed);
+  Car.Delay_distance(width, speed);
   Car.Pen_Rise();
   
   Car.Turn_Right_Degree(90, speed);
-  Delay_degree(90, speed);
+  Car.Delay_degree(90, speed);
   
   Car.Pen_Fall();
   Car.Run_Forward_Distance(length, speed);   
-  Delay_distance(length, speed);
+  Car.Delay_distance(length, speed);
   Car.Pen_Rise();
   
   Car.Turn_Right_Degree(90, speed);
-  Delay_degree(90, speed);
+  Car.Delay_degree(90, speed);
   
   Car.Pen_Fall();
   Car.Run_Forward_Distance(width, speed);   
-  Delay_distance(width, speed);
+  Car.Delay_distance(width, speed);
   Car.Pen_Rise();
 }
 
-/***************************************************************/
-void Delay_distance(int distance, int speed){     //3.14*65/(360/0.9)=0.51025mm
-  switch(speed){
-	case 0: break;
-	case 1: delay(10*distance/0.5/0.8);   break;  //0.8 is the compensation delay.
-	case 2: delay(5*distance/0.5/0.8);    break;
-	case 3: delay(2.5*distance/0.5/0.8);  break;
-	case 4: delay(1.25*distance/0.5/0.8); break;
-	default:break;
-  }			
-}
-
-/***************************************************************/
-//The distance between the two wheels is 96mm. circumference = 96*3.14 = 301.44mm 
-//The circumference of each degree is 301.44/360 = 0.83733mm. accuracy = 0.51025/0.83733 = 0.609 degree.
-void Delay_degree(int degree, int speed){         
-  switch(speed){
-	case 0: break;
-	case 1: delay(degree/0.45*10);   break;       //0.45 is the compensation delay.
-	case 2: delay(degree/0.45*5);    break;
-	case 3: delay(degree/0.45*2.5);  break;
-	case 4: delay(degree/0.45*1.25); break;
-	default:break;
-  }			
-}
 
 
 

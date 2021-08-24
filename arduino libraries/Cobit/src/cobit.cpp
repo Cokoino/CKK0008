@@ -175,21 +175,31 @@ void cobit::Turn_Right_Degree(unsigned int angle, int speed){
 ////////////////////////////////////////////
 void cobit::Left_light(boolean ON_OFF){
   if(ON_OFF == true){
-	digitalWrite(leftLight,HIGH);
+	analogWrite(leftLight, 255);
 	}
   else{
-	digitalWrite(leftLight,LOW);  
+	analogWrite(leftLight, 0);  
 	}	
 }
 
 ////////////////////////////////////////////
 void cobit::Right_light(boolean ON_OFF){
   if(ON_OFF == true){
-	digitalWrite(rightLight,HIGH);
+	analogWrite(rightLight, 255);
 	}
   else{
-	digitalWrite(rightLight,LOW);  
+	analogWrite(rightLight, 0);
 	}	
+}
+
+////////////////////////////////////////////
+void cobit::Left_light_brightness(int brightness){
+  analogWrite(leftLight, 255);
+}
+
+////////////////////////////////////////////
+void cobit::Right_light_brightness(int brightness){
+  analogWrite(rightLight, 0);
 }
 
 ////////////////////////////////////////////
@@ -232,8 +242,31 @@ int cobit::Battery_Level(void){
   }
 }
 
+////////////////////////////////////////////
+void cobit::Delay_distance(int distance, int speed){ //3.14*65/(360/0.9)=0.51025mm
+  switch(speed){
+	case 0: break;
+	case 1: delay(10*distance/0.5/0.8);   break;     //0.8 is the compensation delay.
+	case 2: delay(5*distance/0.5/0.8);    break;
+	case 3: delay(2.5*distance/0.5/0.8);  break;
+	case 4: delay(1.25*distance/0.5/0.8); break;
+	default:break;
+  }	
+}
 
-
+////////////////////////////////////////////
+//The distance between the two wheels is 96mm. circumference = 96*3.14 = 301.44mm 
+//The circumference of each degree is 301.44/360 = 0.83733mm. accuracy = 0.51025/0.83733 = 0.609 degree.
+void cobit::Delay_degree(int degree, int speed){
+  switch(speed){
+	case 0: break;
+	case 1: delay(degree/0.45*10);   break;       //0.45 is the compensation delay.
+	case 2: delay(degree/0.45*5);    break;
+	case 3: delay(degree/0.45*2.5);  break;
+	case 4: delay(degree/0.45*1.25); break;
+	default:break;
+  }
+}
 
 
 

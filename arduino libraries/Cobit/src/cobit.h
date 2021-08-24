@@ -69,6 +69,8 @@ class cobit : public Drawing{
 	
 	void Left_light(boolean ON_OFF);                           //ON_OFF=true or false
 	void Right_light(boolean ON_OFF);
+	void Left_light_brightness(int brightness);                //brightness = 0-255
+	void Right_light_brightness(int brightness);               //brightness = 0-255
 	
 	uint8_t Left_PR(void);                                     //Gets the photosensitive resistance value on the left side of the cobit. return:0--255
 	uint8_t Right_PR(void);                                    //Gets the photosensitive resistance value on the right side of the cobit. return:0--255
@@ -78,6 +80,9 @@ class cobit : public Drawing{
 	
 	float Battery_Voltage(void);                               //battery voltage
 	int Battery_Level(void);                                   //percent ?%
+	
+	void Delay_distance(int distance, int speed);              //Time delay based on distance traveled and speed.
+	void Delay_degree(int degree, int speed);                  //Time delay based on rotation angle and speed.       
 	
     private:
     
