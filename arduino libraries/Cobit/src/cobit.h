@@ -29,7 +29,7 @@
 #include <SoftwareSerial.h>
 #define RX      8
 #define TX      7
-SoftwareSerial BluetoothSerial(RX, TX);
+SoftwareSerial BluetoothPort(RX, TX);
 #endif
 
 #define leftLight  5
