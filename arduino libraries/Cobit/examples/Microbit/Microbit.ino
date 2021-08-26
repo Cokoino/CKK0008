@@ -197,6 +197,10 @@ void loop(){
 					Car.Left_light(OFF);                //parameter = ON or OFF
 					mSerialACK();
 				}
+				if(cmd[1] == Analog){
+					Car.Left_light_brightness(cmd[2]);  //parameter = 0--255
+					mSerialACK();
+				}
 				break;
 		case RightHeadlight: 
 				if(cmd[1] == On){
@@ -205,6 +209,10 @@ void loop(){
 				}
 				if(cmd[1] == Off){
 					Car.Right_light(OFF);               //parameter = ON or OFF
+					mSerialACK();
+				}
+				if(cmd[1] == Analog){
+					Car.Right_light_brightness(cmd[2]); //parameter = 0--255
 					mSerialACK();
 				}
 				break;
