@@ -268,7 +268,17 @@ void cobit::Delay_degree(int degree, int speed){
   }
 }
 
-
+////////////////////////////////////////////
+void cobit::Wheel_Delay(int step, int speed){
+  switch(speed){
+	case 0: break;
+	case 1: delay(step/0.9*10);   break;       //0.9 is the compensation delay.
+	case 2: delay(step/0.9*5);    break;
+	case 3: delay(step/0.9*2.5);  break;
+	case 4: delay(step/0.9*1.25); break;
+	default:break;
+  }
+}
 
 
 

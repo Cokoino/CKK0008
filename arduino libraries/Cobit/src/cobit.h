@@ -82,7 +82,9 @@ class cobit : public Drawing{
 	int Battery_Level(void);                                   //percent ?%
 	
 	void Delay_distance(int distance, int speed);              //Time delay based on distance traveled and speed.
-	void Delay_degree(int degree, int speed);                  //Time delay based on rotation angle and speed.       
+	void Delay_degree(int degree, int speed);                  //Time delay based on rotation angle and speed.  
+
+	void Wheel_Delay(int step, int speed);                     //Time delay based on step and speed.	
 	
     private:
     

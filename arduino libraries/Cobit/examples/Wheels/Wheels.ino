@@ -28,6 +28,8 @@ void setup(){
   //Car.Right_Wheel_Speed(1);       // speed = 0-4
   //Car.Right_Wheel_Step(4);        // step = 0-65535, The step unit is 0.9 degrees.
   //Car.Right_Wheel_brake();        // The right wheel brake 
+  
+  //Car.Wheel_Delay(400,2);         // step = 400, speed=2
 }
 
 /***************************************************************/
@@ -37,17 +39,23 @@ void loop(){
   Car.Left_Wheel_CW();
   Car.Right_Wheel_CW();
   Car.Left_Wheel_Speed(2);
-  Car.Right_Wheel_Speed(2);  
-  delay(5000);
+  Car.Right_Wheel_Speed(2); 
+  Car.Left_Wheel_Step(400);  //400*0.9=360 degree
+  Car.Right_Wheel_Step(400);
+  Car.Wheel_Delay(400,2);
+  
   Car.Left_Wheel_Speed(0);   //stop
   Car.Right_Wheel_Speed(0);  //stop
   delay(1000);
-  Car.Left_Wheel_CCW();
-  Car.Right_Wheel_CCW();
+  
+  Car.Left_Wheel_Mode(2);
+  Car.Right_Wheel_Mode(2);
   Car.Left_Wheel_Speed(2);
-  Car.Right_Wheel_Speed(2); 
-  delay(5000);
-  Car.Stop();
+  Car.Right_Wheel_Speed(2);
+  Car.Left_Wheel_CCW();
+  Car.Right_Wheel_CCW(); 
+  delay(3000);
+  
   Car.Left_Wheel_Speed(0);   //stop
   Car.Right_Wheel_Speed(0);  //stop
   delay(1000);
