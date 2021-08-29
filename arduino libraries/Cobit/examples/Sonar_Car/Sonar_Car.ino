@@ -4,9 +4,9 @@
  * Designer ：jalen
  * Date：2021-6-12
  */
-#define distance_minimum 20
-int distance,distance_10,distance_170;
-int speed = 3;
+#define distance_minimum 5
+int distance_L,distance_R;
+int speed = 2;
 int randNumber=0;
 
 cobit Car;
@@ -28,7 +28,6 @@ void setup(){
 
 /***************************************************************/
 void loop(){
-  if(Car.Battery_Voltage() >= 6.5){
 	  int distance = 0;
 	  distance = Car.Sonar_Measurement_Distance();  //Sonar data refresh rate = 50ms
 	  if(distance>distance_minimum){
@@ -37,52 +36,46 @@ void loop(){
 	  if(distance<=distance_minimum){
 		Car.Stop();
 		sweep();
-		if((distance_10<=distance_minimum)&&(distance_170<=distance_minimum)){
-			Car.Run_Backward(speed);
-			delay(1000);
+		if((distance_L<=distance_minimum)&&(distance_R<=distance_minimum)){
+      Car.Turn_Right_Degree(180,speed);
+      Car.Delay_degree(180, speed);
 		}
-		if(distance_10<distance_170){
-			Car.Turn_Left(speed);
+		if(distance_R<distance_L){
+			Car.Turn_Left_Degree(90,speed);
+      Car.Delay_degree(90, speed);
 		}
-		if(distance_10>distance_170){
-			Car.Turn_Right(speed);
+		if(distance_R>distance_L){
+			Car.Turn_Right_Degree(90,speed);
+      Car.Delay_degree(90, speed);
 		}
-		if(distance_10==distance_170){
+		if(distance_R==distance_L){
 		  randNumber = random(1, 2);  //产生随机数
 		  if(randNumber==1){
-			  Car.Turn_Left(speed);
+        Car.Turn_Left_Degree(90,speed);
+        Car.Delay_degree(90, speed);
 		  }
 		  if(randNumber==2){
-			  Car.Turn_Right(speed);
+        Car.Turn_Right_Degree(180,speed);
+        Car.Delay_degree(180, speed);
 		  }
-		}
-		delay(500); 
-		Car.Stop();   
+		};   
 	  }
-  }
-  powerWarning();
+   delay(200);
 }
 
 /***************************************************************/
 void sweep(void)
 {
-Car.Turn_Left_Degree(80,speed);
-delay(1000); 
-distance_10 = Car.Sonar_Measurement_Distance();
+Car.Turn_Left_Degree(90,speed);
+Car.Delay_degree(90, speed); 
+distance_L = Car.Sonar_Measurement_Distance();
+delay(500); 
 
-Car.Turn_Right_Degree(160,speed);
-delay(1000); 
-distance_170 = Car.Sonar_Measurement_Distance();
+Car.Turn_Right_Degree(180,speed);
+Car.Delay_degree(180, speed); 
+distance_R = Car.Sonar_Measurement_Distance();
+delay(500);
 
-Car.Turn_Left_Degree(80,speed);
-}
-
-/***************************************************************/
-void powerWarning(void){
-	if(Car.Battery_Voltage()<6.5){
-		Car.Buzzer_On();
-	}
-	else{
-		Car.Buzzer_Off();
-	}
+Car.Turn_Left_Degree(90,speed);
+Car.Delay_degree(90, speed);
 }

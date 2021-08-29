@@ -468,7 +468,7 @@ void loop(){
 				break;
 		case IRremote:
 				if(cmd[1] == Read){
-					mSerialSend(results.value);
+					mSerialSend(results.value&0x0000ff);
 				}
 				break;
 		default:break;

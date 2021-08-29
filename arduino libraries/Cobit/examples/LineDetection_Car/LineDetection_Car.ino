@@ -1,7 +1,8 @@
 #include <cobit.h>
 
 cobit Car;
-int speed = 3;
+int speed = 2;
+int turnSpeed = 1;
 
 /***************************************************************/
 void setup(){
@@ -19,12 +20,12 @@ void loop(){
   
   if(Car.Left_LineDetection() == 1 && Car.Right_LineDetection() == 0){
 	  Car.Right_light(ON);
-	  Car.Turn_Left(speed);
+	  Car.Turn_Left(turnSpeed);
   }
   
   if(Car.Left_LineDetection() == 0 && Car.Right_LineDetection() == 1){
 	  Car.Left_light(ON);
-	  Car.Turn_Right(speed);
+	  Car.Turn_Right(turnSpeed);
   }
   
   if(Car.Left_LineDetection() == 0 && Car.Right_LineDetection() == 0){
@@ -32,5 +33,5 @@ void loop(){
 	  Car.Right_light(ON);
 	  Car.Stop();
   }
+  delay(100);
 }
-
