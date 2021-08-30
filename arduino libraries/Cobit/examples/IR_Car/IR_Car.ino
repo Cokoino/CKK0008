@@ -18,6 +18,7 @@ int speed = 3;
 
 void setup(){
   Serial.begin(9600);
+  Car.Reset_chip();                    //Reset N76E003. This function must be used once within the setup function.
   irrecv.enableIRIn();                 // Start the receiver
   
   Car.Buzzer_Volume(3);                // Set the volume of buzzer, level:0--9

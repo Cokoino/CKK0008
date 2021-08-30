@@ -17,8 +17,8 @@ void setup(){
   Car.Reset_chip();                   //Reset N76E003. This function must be used once within the setup function.
   delay(100);
 
-  Car.Buzzer_Volume(3);
-  Car.Buzzer_Frequency(600);  
+  //Car.Buzzer_Volume(3);
+  //Car.Buzzer_Frequency(600);  
   //use for car
   //Car.Brake();                        // Car brake
   //Car.Stop();                         // Car stop
@@ -32,32 +32,21 @@ void setup(){
 
 /***************************************************************/
 void loop(){
-	if(Car.Battery_Voltage() >= 6.5){
-		if(Car.Left_PR() < 100 && Car.Right_PR() < 100){
-		  Car.Stop();
-		}
-		if((Car.Left_PR() - Car.Right_PR()) > 30){
-		  Car.Turn_Left(speed);
-		}
-		if((Car.Left_PR() - Car.Right_PR()) < -30){
-		  Car.Turn_Right(speed);  
-		}
-		if(100 < Car.Left_PR() && Car.Left_PR() < 180 && 100 < Car.Right_PR() && Car.Right_PR() < 180){
-		  Car.Run_Forward(speed);
-		}
-		if(Car.Left_PR() > 180 && Car.Right_PR() > 180){
-		  Car.Run_Backward(speed);
-		}
-    }
-    powerWarning();
+	if(Car.Left_PR() < 100 && Car.Right_PR() < 100){
+		Car.Stop();
+	}
+	if((Car.Left_PR() - Car.Right_PR()) > 30){
+		Car.Turn_Left(speed);
+	}
+	if((Car.Left_PR() - Car.Right_PR()) < -30){
+		Car.Turn_Right(speed);  
+	}
+	if(100 < Car.Left_PR() && Car.Left_PR() < 180 && 100 < Car.Right_PR() && Car.Right_PR() < 180){
+		Car.Run_Forward(speed);
+	}
+	if(Car.Left_PR() > 180 && Car.Right_PR() > 180){
+		Car.Run_Backward(speed);
+	}
 }
 
-/***************************************************************/
-void powerWarning(void){
-	if(Car.Battery_Voltage()<6.5){
-		Car.Buzzer_On();
-	}
-	else{
-		Car.Buzzer_Off();
-	}
-}
+

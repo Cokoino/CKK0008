@@ -7,6 +7,7 @@ int turnSpeed = 1;
 /***************************************************************/
 void setup(){
   //Serial.begin(9600);
+  Car.Reset_chip();                         //Reset N76E003. This function must be used once within the setup function.
   delay(100);
 }
 

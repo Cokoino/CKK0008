@@ -1,7 +1,7 @@
 #include <cobit.h>
 
 cobit Car;
-int speed = 3;
+int speed = 2;
 
 /***************************************************************/
 void setup(){
@@ -16,30 +16,28 @@ void setup(){
 
 /***************************************************************/
 void loop(){
-  if(Car.Left_LineDetection() == 1 || Car.Right_LineDetection() == 1){
-	  Car.Stop();
-	  Car.Buzzer_On();
-	  if(Car.Left_LineDetection() == 1 && Car.Right_LineDetection() == 0){
-		  Car.Left_light(OFF);
-		  Car.Turn_Right(speed);
-	  }	
-
-	  if(Car.Left_LineDetection() == 0 && Car.Right_LineDetection() == 1){
-		  Car.Right_light(OFF);
-		  Car.Turn_Left(speed);
-	  }	
-	  
-      if(Car.Left_LineDetection() == 1 && Car.Right_LineDetection() == 1){
-	      Car.Left_light(OFF);
-	      Car.Right_light(OFF);
-		  Car.Run_Backward(speed); 
-      }
+  if(Car.Left_LineDetection() == 0 && Car.Right_LineDetection() == 0){
+	  Car.Left_light(OFF);
+	  Car.Right_light(OFF);
+	  Car.Run_Forward(speed);
   }
-  else{
+  
+  if(Car.Left_LineDetection() == 0 && Car.Right_LineDetection() == 1){
+	  Car.Right_light(ON);
+	  Car.Turn_Left(speed);
+  }
+  
+  if(Car.Left_LineDetection() == 1 && Car.Right_LineDetection() == 0){
+	  Car.Left_light(ON);
+	  Car.Turn_Right(speed);
+  }
+  
+  if(Car.Left_LineDetection() == 1 && Car.Right_LineDetection() == 1){
 	  Car.Left_light(ON);
 	  Car.Right_light(ON);
-	  Car.Run_Forward(speed);
-	  Car.Buzzer_Off();
+      Car.Turn_Right_Degree(180,speed);
+      Car.Delay_degree(180, speed);
   }
+  delay(100);
 }
 
