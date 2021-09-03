@@ -26,10 +26,7 @@
 #endif
 
 #ifdef BLUETOOTH
-#include <SoftwareSerial.h>
-#define RX      8
-#define TX      7
-SoftwareSerial BluetoothPort(RX, TX);
+#include "Bluetooth/Bluetooth.h"
 #endif
 
 #define leftLight  5
