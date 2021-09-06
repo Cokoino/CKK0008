@@ -1,21 +1,23 @@
 /*
  * mobile phone communicates with Cobit
- * button format: 0xff-data-0x00-0xff
- * slider format: 0xff-data-0x(0a-0e)-0xff
- * accelerometer format: 0xff-dataX-dataY-dataZ-0x14-0xff
+ * button format: S-0x00-data-P
+ * slider format: S-0x(0a-0e)-data-P
+ * accelerometer format: S-0x14-dataX-dataY-dataZ-P
  * ----data > 100 : real data = -(data-100)/10
  * ----data < 100 : real data = data/10
  * Designer ：jalen
- * Date：2021-9-3
+ * Date：2021-9-6
  */
 	
 #ifndef BLUETOOTH_h
 #define BLUETOOTH_h
 
 #include <SoftwareSerial.h>
-#define RX      8
-#define TX      7
-SoftwareSerial bluetooth(RX, TX);
+#define RX_      8
+#define TX_      7
+SoftwareSerial bluetooth(RX_, TX_);
+
+bool bCMD = false;
 
 enum bElement{
   /////////SensorAddress/////////
@@ -56,8 +58,18 @@ enum bElement{
   b_Ti                      =    0x1E, 
 };
 
-#define bCmdNum  6
-unsigned int bCmd[bCmdNum] = {0,0,0,0,0,0};
+#define bCmdNum  4
+String bString  = ""; 
+unsigned int bCmd[bCmdNum] = {0,0,0,0};
+
+///////////////////////////////////////////////////////////////////
+//  Converts strings to numbers.
+void strToNum(String str){
+	int NumData = str.length()/3;
+	for(int i=0; i<NumData; i++){
+		bCmd[i]= str.substring(i*3,i*3+3).toInt();
+	}
+}
 
 ///////////////////////////////////////////////////////////////////
 void BluetoothInit(void){
@@ -67,19 +79,22 @@ void BluetoothInit(void){
 
 ///////////////////////////////////////////////////////////////////
 void BluetoothRead() {
-  for(int a = 0; a < bCmdNum; a++){
-	bCmd[a] = 0;
-  }
-  
-  while (bluetooth.available()>0) {
-    bCmd[0] = bluetooth.read();
-	if(bCmd[0] == 255){
-		for(int i = 1; i< bCmdNum; i++){
-			bCmd[i] = bluetooth.read();
-			if(bCmd[i] == 255){
-				break;
-			}
+  while (bluetooth.available()) {
+	if(!bCMD){
+		for(int i=0; i<bCmdNum; i++){
+			bCmd[i]=0;
 		}
+	}
+	char inChar = bluetooth.read();
+	bString += inChar;
+	if(inChar == 'P'){
+		if(bString[0]=='S'){
+			//Remove the characters 'S' and 'P', and then convert the string to a number.
+			strToNum(bString.substring(1, bString.length()-1));  
+			bCMD = true;
+		}
+	// clear the string:
+	bString = "";
 	}
   }
 }

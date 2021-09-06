@@ -120,6 +120,11 @@ char * NumToChar(int num){
 ///////////////////////////////////////////////////////////////////
 void mSerialRead() {
   while (microbit.available()) {
+	if(!cmdComplete){
+		for(int i=0; i<cmdNum; i++){
+			cmd[i]=0;
+		}
+	}
     // get the new byte:
     char inChar = (char)microbit.read();
     // add it to the inputString:
