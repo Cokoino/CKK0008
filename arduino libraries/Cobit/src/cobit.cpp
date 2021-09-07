@@ -194,12 +194,12 @@ void cobit::Right_light(boolean ON_OFF){
 
 ////////////////////////////////////////////
 void cobit::Left_light_brightness(int brightness){
-  analogWrite(leftLight, 255);
+  analogWrite(leftLight, brightness);
 }
 
 ////////////////////////////////////////////
 void cobit::Right_light_brightness(int brightness){
-  analogWrite(rightLight, 0);
+  analogWrite(rightLight, brightness);
 }
 
 ////////////////////////////////////////////

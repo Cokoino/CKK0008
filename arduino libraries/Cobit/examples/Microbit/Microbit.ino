@@ -31,7 +31,7 @@ void setup(){
   irrecv.enableIRIn();            // Start the receiver
   
   #ifdef TEST                     //For testing code.
-  Serial.begin(115200);           // start serial for output
+  Serial.begin(9600);           // start serial for output
   #endif
   
   Car.Reset_chip();               //Reset N76E003. This function must be used once within the setup function.
@@ -198,6 +198,7 @@ void loop(){
 					mSerialACK();
 				}
 				if(cmd[1] == Analog){
+					cmd[2] = map(cmd[2], 0, 180, 0, 255);
 					Car.Left_light_brightness(cmd[2]);  //parameter = 0--255
 					mSerialACK();
 				}
@@ -212,6 +213,7 @@ void loop(){
 					mSerialACK();
 				}
 				if(cmd[1] == Analog){
+					cmd[2] = map(cmd[2], 0, 180, 0, 255);
 					Car.Right_light_brightness(cmd[2]); //parameter = 0--255
 					mSerialACK();
 				}

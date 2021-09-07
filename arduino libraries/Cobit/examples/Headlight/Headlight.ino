@@ -29,4 +29,5 @@ void loop(){
 	Car.Right_light_brightness(i);  //brightness = 0-255
 	delay(10);
   }
+  delay(1000);
 }

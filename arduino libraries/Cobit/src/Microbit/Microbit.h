@@ -92,7 +92,7 @@ unsigned int cmd[cmdNum] = {0,0,0,0,0};
 
 ///////////////////////////////////////////////////////////////////
 void mSerialInit(void){
-  microbit.begin(115200);
+  microbit.begin(9600);
   // reserve 100 bytes for the inputString:
   inputString.reserve(100);
   fontString.reserve(100);
