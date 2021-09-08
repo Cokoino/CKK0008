@@ -26,6 +26,7 @@ cobit Car;
 int RECV_PIN = 3;
 IRreceiver irrecv(RECV_PIN);
 decode_results results;
+int IRdata;
 
 #define PIN        4              // Which pin on the Arduino is connected to the NeoPixels?
 #define NUMPIXELS  4              // How many NeoPixels are attached to the Arduino?
@@ -55,6 +56,7 @@ void setup(){
 void loop(){
   mSerialRead();
   if (irrecv.decode(&results)) {
+	IRdata = (int)results.value&0x0000ff;
     irrecv.resume();                                    // Receive the next value
   }
   if(cmdComplete){
@@ -153,6 +155,11 @@ void loop(){
 				if(cmd[1] == Distance){
 					//Serial.println(12);
 					mSerialSend(Car.Sonar_Measurement_Distance());
+				}
+				break;
+		case IRremote:
+				if(cmd[1] == Read){
+					mSerialSend(IRdata);
 				}
 				break;
 		case Buzzer:    
@@ -474,11 +481,6 @@ void loop(){
 				font[0] = (char)cmd[2];
 				Car.writing(1, font);
 				mSerialACK();
-				break;
-		case IRremote:
-				if(cmd[1] == Read){
-					mSerialSend(results.value&0x0000ff);
-				}
 				break;
 		default:break;
 	};
