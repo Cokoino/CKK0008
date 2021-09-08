@@ -11,7 +11,7 @@
  * Must return accurate data within 1100 ms; otherwise, the read fails.
  *
  * Designer ：jalen
- * Date：2021-6-27
+ * Date：2021-9-8
  */
 	
 #ifndef MICROBIT_h
@@ -95,6 +95,7 @@ unsigned int cmd[cmdNum] = {0,0,0,0,0};
 
 ///////////////////////////////////////////////////////////////////
 void mSerialInit(void){
+  //If the baud rate is greater than 9600, data may be lost.
   microbit.begin(9600);
   // reserve 100 bytes for the inputString:
   inputString.reserve(100);
