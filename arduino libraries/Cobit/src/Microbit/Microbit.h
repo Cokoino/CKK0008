@@ -3,12 +3,15 @@
  * Speed rating：0 = 0rpm，1 = 15rpm，2 = 30rpm，3 = 60rpm，4 = 120rpm
  * The maximum measurement distance of sonar is 255CM with an accuracy of +/-1CM.
  * Buzzer can be set frequency range: 20-- 1K Hz, volume: 0-5 level
- * Designer ：jalen
- * Date：2021-6-27
  *
  * Microbit communicates with Cobit
- * Write: S + SensorAddress + Data + ... + P --> Waiting to receive data --> SP
+ * Write: S + SensorAddress + Data + ... + P --> Wait for an ACK signal --> SP
  * Read : S + SensorAddress + Data + ... + P --> Waiting to receive data --> S + Data + P
+ * Must return an acknowledgement within 540 ms or the write fails.
+ * Must return accurate data within 1100 ms; otherwise, the read fails.
+ *
+ * Designer ：jalen
+ * Date：2021-6-27
  */
 	
 #ifndef MICROBIT_h
