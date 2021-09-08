@@ -7,4 +7,5 @@ Microbit extension libraries: https://github.com/Cokoino/pxt-cobit
 
 # Images
 
-![](https://github.com/Cokoino/CKK0008/raw/master/cobit.png)
+![](https://github.com/Cokoino/CKK0008/blob/main/cobit.png)
+
