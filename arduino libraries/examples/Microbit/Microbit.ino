@@ -13,7 +13,7 @@
  * Designer ：jalen
  * Date：2021-6-27
  */
-//#define TEST   //For testing code
+#define TEST   //For testing code
  
 #define IR                       //Include the infrared control library file
 #define  Pixel
@@ -26,7 +26,7 @@ cobit Car;
 int RECV_PIN = 3;
 IRreceiver irrecv(RECV_PIN);
 decode_results results;
-int IRdata;
+String mfont = " ";
 
 #define PIN        4              // Which pin on the Arduino is connected to the NeoPixels?
 #define NUMPIXELS  4              // How many NeoPixels are attached to the Arduino?
@@ -56,7 +56,6 @@ void setup(){
 void loop(){
   mSerialRead();
   if (irrecv.decode(&results)) {
-	IRdata = (int)results.value&0x0000ff;
     irrecv.resume();                                    // Receive the next value
   }
   if(cmdComplete){
@@ -155,11 +154,6 @@ void loop(){
 				if(cmd[1] == Distance){
 					//Serial.println(12);
 					mSerialSend(Car.Sonar_Measurement_Distance());
-				}
-				break;
-		case IRremote:
-				if(cmd[1] == Read){
-					mSerialSend(IRdata);
 				}
 				break;
 		case Buzzer:    
@@ -475,12 +469,18 @@ void loop(){
 					mSerialACK();					
 				}
 				break;
-		case Font:
+		case Font: 
 				Car.FontSize(cmd[1]);
-				String font = " ";
-				font[0] = (char)cmd[2];
-				Car.writing(1, font);
+				mfont = " ";
+				mfont[0] = (char)cmd[2];
+				Car.writing(1, mfont);
 				mSerialACK();
+				break;
+		case IRremote: 
+				if(cmd[1] == Read){
+					mSerialSend((int)results.value&0x0000ff);
+          results.value = 0;
+				}
 				break;
 		default:break;
 	};
