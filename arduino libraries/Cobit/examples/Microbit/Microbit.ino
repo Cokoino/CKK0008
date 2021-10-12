@@ -11,9 +11,9 @@
  * Must return accurate data within 1100 ms; otherwise, the read fails.
  *
  * Designer ：jalen
- * Date：2021-9-9
+ * Date：2021-6-27
  */
-#define TEST   //For testing code
+//#define TEST   //For testing code
  
 #define IR                       //Include the infrared control library file
 #define  Pixel
@@ -26,7 +26,7 @@ cobit Car;
 int RECV_PIN = 3;
 IRreceiver irrecv(RECV_PIN);
 decode_results results;
-String mfont = " ";
+int IRdata;
 
 #define PIN        4              // Which pin on the Arduino is connected to the NeoPixels?
 #define NUMPIXELS  4              // How many NeoPixels are attached to the Arduino?
@@ -56,6 +56,7 @@ void setup(){
 void loop(){
   mSerialRead();
   if (irrecv.decode(&results)) {
+	IRdata = (int)results.value&0x0000ff;
     irrecv.resume();                                    // Receive the next value
   }
   if(cmdComplete){
@@ -68,162 +69,198 @@ void loop(){
 				if(cmd[1] == Step){
 					Car.Left_Wheel_Mode(1);             // Mode = 1, Step mode. Mode = 2, Keep on run mode.
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Continue){
 					Car.Left_Wheel_Mode(2);             // Mode = 1, Step mode. Mode = 2, Keep on run mode.
 					mSerialACK();
+					break;
 				}		
 				if(cmd[1] == CW){
 					Car.Left_Wheel_CW();                // The left wheel turns clockwise
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == CCW){
 					Car.Left_Wheel_CCW();               // The left wheel turns counterclockwise
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Speed){
 					Car.Left_Wheel_Speed(cmd[2]);       // speed = 0-4
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == TurnDegree){
 					Car.Left_Wheel_Step(cmd[2]);          // step = 0-65535, The step unit is 0.9 degrees.
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Distance){
 					unsigned step = cmd[2]*1000 + cmd[3];
 					Car.Left_Wheel_Step(step);          // step = 0-65535, The step unit is 0.9 degrees.
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Stop){
 					Car.Left_Wheel_Speed(0);             // speed = 0-4 
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Brake){
 					Car.Left_Wheel_brake();             // The left wheel brake
 					mSerialACK();
+					break;
 				}
 				break;
 		case RightWheel:   
 				if(cmd[1] == Step){
 					Car.Right_Wheel_Mode(1);             // Mode = 1, Step mode. Mode = 2, Keep on run mode.
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Continue){
 					Car.Right_Wheel_Mode(2);             // Mode = 1, Step mode. Mode = 2, Keep on run mode.
 					mSerialACK();
+					break;
 				}		
 				if(cmd[1] == CW){
 					Car.Right_Wheel_CW();                // The Right wheel turns clockwise
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == CCW){
 					Car.Right_Wheel_CCW();               // The Right wheel turns counterclockwise
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Speed){
 					Car.Right_Wheel_Speed(cmd[2]);       // speed = 0-4
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == TurnDegree){
 					Car.Right_Wheel_Step(cmd[2]);          // step = 0-65535, The step unit is 0.9 degrees.
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Distance){
 					unsigned step = cmd[2]*1000 + cmd[3];
 					Car.Right_Wheel_Step(step);          // step = 0-65535, The step unit is 0.9 degrees.
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Stop){
 					Car.Right_Wheel_Speed(0);             // speed = 0-4
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Brake){
 					Car.Right_Wheel_brake();             // The Right wheel brake
 					mSerialACK();
+					break;
 				}
-				break; 
+				break;
 		case Sonar:  
 				if(cmd[1] == On){
 					Car.Sonar_On();
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Off){
 					Car.Sonar_Off();
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Distance){
 					//Serial.println(12);
 					mSerialSend(Car.Sonar_Measurement_Distance());
+					break;
 				}
 				break;
 		case Buzzer:    
 				if(cmd[1] == On){
 					Car.Buzzer_On();
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Off){
 					Car.Buzzer_Off();
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Frequency){
 					Car.Buzzer_Frequency(cmd[2]*256+cmd[3]);       // frequency = 20-1K
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Volume){
 					Car.Buzzer_Volume(cmd[2]);          // Set the volume of buzzer, level:0--9
 					mSerialACK();
+					break;
 				}
 				break;
 		case Servo: 
 				if(cmd[1] == On){
 					Car.All_Servo_On();
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Off){
 					Car.All_Servo_Off();
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Servo1){
 					Car.Servo1_Degree(cmd[2]);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Servo2){
 					Car.Servo2_Degree(cmd[2]);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Servo3){
 					Car.Servo3_Degree(cmd[2]);
 					mSerialACK();
+					break;
 				}
 				break;
 		case LeftHeadlight:
 				if(cmd[1] == On){
 					Car.Left_light(ON);                 //parameter = ON or OFF
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Off){
 					Car.Left_light(OFF);                //parameter = ON or OFF
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Analog){
 					cmd[2] = map(cmd[2], 0, 180, 0, 255);
 					Car.Left_light_brightness(cmd[2]);  //parameter = 0--255
 					mSerialACK();
+					break;
 				}
 				break;
 		case RightHeadlight: 
 				if(cmd[1] == On){
 					Car.Right_light(ON);                //parameter = ON or OFF
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Off){
 					Car.Right_light(OFF);               //parameter = ON or OFF
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Analog){
 					cmd[2] = map(cmd[2], 0, 180, 0, 255);
 					Car.Right_light_brightness(cmd[2]); //parameter = 0--255
 					mSerialACK();
+					break;
 				}
 				break;
 		case LeftPR: 
@@ -241,61 +278,73 @@ void loop(){
 		case RGB_:
 				if(cmd[1] == Brightness){
 					pixels.setBrightness(cmd[2]);
-					mSerialACK();					
+					mSerialACK();
+					break;
 				}
 				if(cmd[1] == RGB1){
 					pixels.setPixelColor(0, pixels.Color(cmd[2], cmd[3], cmd[4]));
 					pixels.show();
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == RGB2){
 					pixels.setPixelColor(1, pixels.Color(cmd[2], cmd[3], cmd[4]));
 					pixels.show();
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == RGB3){
 					pixels.setPixelColor(2, pixels.Color(cmd[2], cmd[3], cmd[4]));
 					pixels.show();
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == RGB4){
 					pixels.setPixelColor(3, pixels.Color(cmd[2], cmd[3], cmd[4]));
 					pixels.show();
 					mSerialACK();
+					break;
 				}
 				break;				
 		case Voltmeter:	
 				if(cmd[1] == Analog){
 					mSerialSend(Car.Battery_Voltage()*10);
+					break;
 				}
 				if(cmd[1] == Percent){
 					mSerialSend(Car.Battery_Level());
+					break;
 				}
 				break;
 		case a0: 
 				if(cmd[1] == Input){
 					pinMode(A0, INPUT);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Output){
 					pinMode(A0, OUTPUT);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Write){
 					if(cmd[2] == Digital){
 						if(cmd[3] == 100){digitalWrite(A0, LOW);}
 						if(cmd[3] == 101){digitalWrite(A0, HIGH);}	
 						mSerialACK();
+						break;
 					}
 				}
 				if(cmd[1] == Read){
 					if(cmd[2] == Digital){
-						mSerialSend(digitalRead(A0));						
+						mSerialSend(digitalRead(A0));	
+						break;
 					}
 				}
 				if(cmd[1] == Read){
 					if(cmd[2] == Analog){
-						mSerialSend(map(analogRead(A0), 0, 1023, 0, 255));						
+						mSerialSend(map(analogRead(A0), 0, 1023, 0, 255));	
+						break;
 					}
 				}
 				break;
@@ -303,26 +352,31 @@ void loop(){
 				if(cmd[1] == Input){
 					pinMode(A1, INPUT);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Output){
 					pinMode(A1, OUTPUT);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Write){
 					if(cmd[2] == Digital){
 						if(cmd[3] == 100){digitalWrite(A1, LOW);}
 						if(cmd[3] == 101){digitalWrite(A1, HIGH);}	
 						mSerialACK();
+						break;
 					}
 				}
 				if(cmd[1] == Read){
 					if(cmd[2] == Digital){
-						mSerialSend(digitalRead(A1));						
+						mSerialSend(digitalRead(A1));
+						break;
 					}
 				}
 				if(cmd[1] == Read){
 					if(cmd[2] == Analog){
-						mSerialSend(map(analogRead(A1), 0, 1023, 0, 255));						
+						mSerialSend(map(analogRead(A1), 0, 1023, 0, 255));	
+						break;
 					}
 				}
 				break;
@@ -330,26 +384,31 @@ void loop(){
 				if(cmd[1] == Input){
 					pinMode(A2, INPUT);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Output){
 					pinMode(A2, OUTPUT);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Write){
 					if(cmd[2] == Digital){
 						if(cmd[3] == 100){digitalWrite(A2, LOW);}
 						if(cmd[3] == 101){digitalWrite(A2, HIGH);}	
 						mSerialACK();
+						break;
 					}
 				}
 				if(cmd[1] == Read){
 					if(cmd[2] == Digital){
-						mSerialSend(digitalRead(A2));						
+						mSerialSend(digitalRead(A2));
+						break;
 					}
 				}
 				if(cmd[1] == Read){
 					if(cmd[2] == Analog){
-						mSerialSend(map(analogRead(A2), 0, 1023, 0, 255));						
+						mSerialSend(map(analogRead(A2), 0, 1023, 0, 255));
+						break;
 					}
 				}		
 				break;
@@ -357,27 +416,32 @@ void loop(){
 				if(cmd[1] == Input){
 					pinMode(11, INPUT);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Output){
 					pinMode(11, OUTPUT);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Write){
 					if(cmd[2] == Digital){
 						if(cmd[3] == 100){digitalWrite(11, LOW);}
 						if(cmd[3] == 101){digitalWrite(11, HIGH);}
 						mSerialACK();
+						break;
 					}
 				}
 				if(cmd[1] == Read){
 					if(cmd[2] == Digital){
 						mSerialSend(digitalRead(11));
+						break;
 					}
 				}
 				if(cmd[1] == Write){
 					if(cmd[2] == Analog){
 						analogWrite(11, cmd[3]);
 						mSerialACK();
+						break;
 					}
 				}				
 				break;
@@ -385,21 +449,25 @@ void loop(){
 				if(cmd[1] == Input){
 					pinMode(12, INPUT);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Output){
 					mSerialACK();
 					pinMode(12, OUTPUT);
+					break;
 				}
 				if(cmd[1] == Write){
 					if(cmd[2] == Digital){
 						if(cmd[3] == 100){digitalWrite(12, LOW);}
 						if(cmd[3] == 101){digitalWrite(12, HIGH);}
 						mSerialACK();
+						break;
 					}
 				}
 				if(cmd[1] == Read){
 					if(cmd[2] == Digital){
-						mSerialSend(digitalRead(12));						
+						mSerialSend(digitalRead(12));	
+						break;
 					}
 				}		
 				break;
@@ -407,21 +475,25 @@ void loop(){
 				if(cmd[1] == Input){
 					pinMode(13, INPUT);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Output){
 					pinMode(13, OUTPUT);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Write){
 					if(cmd[2] == Digital){
 						if(cmd[3] == 100){digitalWrite(13, LOW);}
 						if(cmd[3] == 101){digitalWrite(13, HIGH);}
 						mSerialACK();
+						break;
 					}
 				}
 				if(cmd[1] == Read){
 					if(cmd[2] == Digital){
 						mSerialSend(digitalRead(13));
+						break;
 					}
 				}				
 				break;
@@ -429,57 +501,66 @@ void loop(){
 				if(cmd[1] == Stop){
 					Car.Stop(); 
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Brake){
 					Car.Brake();
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Forward){
 					Car.Run_Forward(cmd[2]);     //forward
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Back){
 					Car.Run_Backward(cmd[2]);   //back
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Left){
 					Car.Turn_Left(cmd[2]);      //turn left
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == Right){
 					Car.Turn_Right(cmd[2]);     //turn right
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == ForwardDistance){
 					unsigned int distance = cmd[2]*1000+cmd[3];
 					Car.Run_Forward_Distance(distance, cmd[4]); //forward
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == BackDistance){
 					unsigned int distance = cmd[2]*1000+cmd[3];
 					Car.Run_Backward_Distance(distance, cmd[4]);//back
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == CW){
 					Car.Turn_Right_Degree(cmd[2],cmd[3]);
 					mSerialACK();
+					break;
 				}
 				if(cmd[1] == CCW){
 					Car.Turn_Left_Degree(cmd[2],cmd[3]);
-					mSerialACK();					
+					mSerialACK();
+					break;					
 				}
 				break;
-		case Font: 
+		case Font:
 				Car.FontSize(cmd[1]);
-				mfont = " ";
-				mfont[0] = (char)cmd[2];
-				Car.writing(1, mfont);
+				String font = " ";
+				font[0] = (char)cmd[2];
+				Car.writing(1, font);
 				mSerialACK();
 				break;
-		case IRremote: 
+		case IRremote:
 				if(cmd[1] == Read){
-					mSerialSend((int)results.value&0x0000ff);
-          results.value = 0;
+					mSerialSend(IRdata);
 				}
 				break;
 		default:break;
