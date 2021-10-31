@@ -42,6 +42,7 @@ void N76E003::Write(int SensorAdress, int data1, int data2, int data3){
 ////////////////////////////////////////////
 void N76E003::Reset_chip(){
   Write(Reset, 0x00, 0x00, 0x00); 
+  delay(200);
 }
 
 ////////////////////////////////////////////
